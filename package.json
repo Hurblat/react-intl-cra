@@ -1,5 +1,5 @@
 {
-  "name": "react-intl-cra",
+  "name": "@stravito/react-intl-cra",
   "version": "0.3.3",
   "description": "Extract messages of `Creact React App` from the command line",
   "repository": "https://github.com/evenchange4/react-intl-cra",
