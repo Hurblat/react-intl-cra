@@ -11,11 +11,16 @@ function extract(pattern /* : string */) /* : string */ {
   const relativeSrcPaths = glob.sync(pattern);
   const contents = srcPaths.map(p => fs.readFileSync(p, 'utf-8'));
   const messages = contents
+    .map(content => content.replace('<>', '<div>'))
+    .map(content => content.replace('</>', '</div>'))
     .map(content => {
-      content.replace('<>', '<div>');
-      content.replace('</>', '</div>');
+      let filteredContent = content.slice();
+      filteredContent = filteredContent.replace('<>', '<div>');
+      filteredContent = filteredContent.replace('(<>', '(<div>');
+      filteredContent = filteredContent.replace('</>', '</div>');
+      filteredContent = filteredContent.replace('</>)', '</div>)');
 
-      babel.transform(content, {
+      return babel.transform(filteredContent, {
         presets: [require.resolve('babel-preset-react-app')],
         plugins: [require.resolve('babel-plugin-react-intl')],
         babelrc: false,
